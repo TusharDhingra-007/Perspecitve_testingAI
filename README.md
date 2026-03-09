@@ -52,17 +52,17 @@ For our initial implementation, we focus on detecting confusion using measurable
 
 We analyze:
 
-Number of clicks
+* Number of clicks
 
-Task completion time
+* Task completion time
 
-Backtracks
+* Backtracks
 
-Rage clicks
+* Rage clicks
 
-Hover time
+* Hover time
 
-Interaction patterns
+* Interaction patterns
 
 The AI model predicts a Satisfaction Score, which is converted into a:
 
@@ -129,11 +129,11 @@ Integrate real-time UX analytics
 Build a plug-in framework for SDLC integration
 
 ## 🖼️ Visual Demonstration
-Proof of Concept (POC)
+* Proof of Concept (POC)
 
 <img width="348" height="362" alt="image" src="https://github.com/user-attachments/assets/764eb204-6cca-4224-879e-ff4a299334ca" />
 
-Actual Idea – Plug-In Model Architecture
+* Actual Idea – Plug-In Model Architecture
 
 <img width="880" height="611" alt="image" src="https://github.com/user-attachments/assets/66e4c28e-16cf-44f6-8155-613244170da9" />
 
