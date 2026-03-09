@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Risk Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">◈</div>
+        <div class="brand-name">AURAV</div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item active" href="#">
+          <span class="nav-ico">▦</span><span>Dashboard</span>
+        </a>
+        <a class="nav-item" href="#"><span class="nav-ico">⌁</span><span>Analytics</span></a>
+        <a class="nav-item" href="#"><span class="nav-ico">⎙</span><span>Sessions</span></a>
+        <a class="nav-item" href="#"><span class="nav-ico">⟡</span><span>Risks</span></a>
+        <a class="nav-item" href="#"><span class="nav-ico">⚙</span><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="avatar"></div>
+          <div class="user-meta">
+            <div class="user-name">User</div>
+            <div class="user-sub">Session</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main">
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title">Risk Dashboard</h1>
+          <div class="pill-row">
+            <button class="pill active" type="button">Fresh</button>
+            <button class="pill" type="button">Monthly</button>
+            <button class="pill" type="button">Reports</button>
+            <button class="pill" type="button">Trends</button>
+            <button class="pill" type="button">Sort</button>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="search">
+            <span class="search-ico">⌕</span>
+            <input type="text" placeholder="Search…" aria-label="Search" />
+          </div>
+
+          <!-- Actions dropdown (kept for JS) -->
+          <div class="actions-wrapper">
+            <button class="actions-btn" id="actionsBtn">
+              Actions <span class="arrow">▾</span>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+              <button class="dropdown-item" id="newRiskBtn">New Risk</button>
+            </div>
+          </div>
+
+          <div class="topbar-icons">
+            <button class="icon-btn" title="Notifications">⟠</button>
+            <button class="icon-btn" title="Settings">⚙</button>
+            <div class="topbar-avatar"></div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <section class="content">
+        <div class="grid">
+          <!-- Card 1: Placeholder line chart -->
+          <section class="card card-span-2">
+            <div class="card-head">
+              <h2 class="card-title">Risk trend</h2>
+              <div class="card-actions">
+                <button class="chip" type="button">Live</button>
+                <button class="chip" type="button">7D</button>
+              </div>
+            </div>
+
+            <div class="chart-frame">
+              <!-- Lightweight SVG chart (no dependency) -->
+              <svg class="chart-svg" viewBox="0 0 900 260" preserveAspectRatio="none" aria-label="Line chart">
+                <defs>
+                  <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="var(--cyan)"/>
+                    <stop offset="1" stop-color="var(--pink)"/>
+                  </linearGradient>
+                  <linearGradient id="fill1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="var(--cyan)" stop-opacity="0.35"/>
+                    <stop offset="1" stop-color="var(--cyan)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+
+                <path class="chart-grid" d="M0 30 H900 M0 80 H900 M0 130 H900 M0 180 H900 M0 230 H900" />
+                <path class="chart-line" d="M20 220 L110 190 L200 140 L290 160 L380 110 L470 150 L560 70 L650 130 L740 60 L830 120 L880 30" stroke="url(#g1)"/>
+                <path class="chart-area" d="M20 220 L110 190 L200 140 L290 160 L380 110 L470 150 L560 70 L650 130 L740 60 L830 120 L880 30 L880 250 L20 250 Z" fill="url(#fill1)"/>
+              </svg>
+            </div>
+          </section>
+
+          <!-- Card 2: Confusion score (uses existing IDs so app.js works) -->
+          <section class="card">
+            <div class="card-head">
+              <h2 class="card-title">Confusion score</h2>
+              <div class="legend-dot"></div>
+            </div>
+
+            <div class="confusion-wrap">
+              <button class="btn-glow" id="bottomActionsBtn" type="button">Calculate</button>
+
+              <div class="confusion-result" id="confusionResult">
+                <div class="confusion-card">
+                  <div class="confusion-ring-wrapper">
+                    <svg class="confusion-ring" viewBox="0 0 120 120">
+                      <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+                      <circle class="ring-progress" id="ringProgress" cx="60" cy="60" r="52"
+                        stroke-dasharray="326.73" stroke-dashoffset="326.73"></circle>
+                    </svg>
+                    <div class="confusion-percent" id="confusionPercent">0%</div>
+                  </div>
+
+                  <div class="confusion-details">
+                    <div class="confusion-label" id="confusionLabel">Based on last risk's UX metrics</div>
+                    <div class="confusion-metrics" id="confusionMetrics"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Card 3: Placeholder area chart -->
+          <section class="card">
+            <div class="card-head">
+              <h2 class="card-title">Severity mix</h2>
+              <div class="mini-badges">
+                <span class="mini-badge low">Low</span>
+                <span class="mini-badge med">Med</span>
+                <span class="mini-badge high">High</span>
+              </div>
+            </div>
+
+            <div class="chart-frame small">
+              <svg class="chart-svg" viewBox="0 0 420 220" preserveAspectRatio="none" aria-label="Area chart">
+                <defs>
+                  <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="var(--purple)"/>
+                    <stop offset="1" stop-color="var(--cyan)"/>
+                  </linearGradient>
+                  <linearGradient id="fill2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="var(--purple)" stop-opacity="0.35"/>
+                    <stop offset="1" stop-color="var(--purple)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path class="chart-grid" d="M0 40 H420 M0 90 H420 M0 140 H420 M0 190 H420" />
+                <path class="chart-line" d="M10 160 L70 150 L130 140 L190 150 L250 120 L310 140 L370 90 L410 40" stroke="url(#g2)"/>
+                <path class="chart-area" d="M10 160 L70 150 L130 140 L190 150 L250 120 L310 140 L370 90 L410 40 L410 210 L10 210 Z" fill="url(#fill2)"/>
+              </svg>
+            </div>
+          </section>
+
+          <!-- Card 4: Placeholder line chart -->
+          <section class="card">
+            <div class="card-head">
+              <h2 class="card-title">Activity</h2>
+              <span class="subtle">Realtime</span>
+            </div>
+            <div class="chart-frame small">
+              <svg class="chart-svg" viewBox="0 0 420 220" preserveAspectRatio="none" aria-label="Line chart">
+                <defs>
+                  <linearGradient id="g3" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="var(--cyan)"/>
+                    <stop offset="1" stop-color="var(--purple)"/>
+                  </linearGradient>
+                </defs>
+                <path class="chart-grid" d="M0 40 H420 M0 90 H420 M0 140 H420 M0 190 H420" />
+                <path class="chart-line" d="M10 170 L70 175 L130 140 L190 150 L250 120 L310 150 L370 110 L410 70" stroke="url(#g3)"/>
+              </svg>
+            </div>
+          </section>
+        </div>
+
+        <!-- Risks table card (keeps existing IDs so Firestore listener works) -->
+        <section class="card table-card">
+          <div class="card-head">
+            <h2 class="card-title">Risks</h2>
+            <span class="subtle" id="tableHint">Latest entries</span>
+          </div>
+
+          <div class="table-wrapper">
+            <table id="riskTable">
+              <thead>
+                <tr>
+                  <th>Risk ID</th>
+                  <th>Risk Description</th>
+                  <th>Severity Level</th>
+                  <th>Groups</th>
+                  <th>Created At</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody id="riskTableBody"></tbody>
+            </table>
+
+            <p class="empty-msg" id="emptyMsg">
+              No risks created yet. Click <strong>Actions → New Risk</strong> to add one.
+            </p>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===== NEW RISK FORM MODAL ===== -->
+  <div class="modal-overlay" id="riskFormModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Create New Risk</h2>
+        <button class="modal-close" id="closeFormModal" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="riskForm" novalidate>
+        <div class="form-section">
+          <h3>Risk Details</h3>
+
+          <div class="form-group">
+            <label for="riskId">Risk ID:</label>
+            <input type="text" id="riskId" placeholder="e.g. RISK-001" required />
+            <span class="error-text" id="riskIdError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="riskDesc">Risk Description:</label>
+            <textarea id="riskDesc" rows="3" placeholder="Describe the risk..." required></textarea>
+            <span class="error-text" id="riskDescError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="severityLevel">Severity Level:</label>
+            <select id="severityLevel" required>
+              <option value="">-- Select --</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Critical">Critical</option>
+            </select>
+            <span class="error-text" id="severityError"></span>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Objects</h3>
+
+          <div class="form-group">
+            <label for="groups">Groups:</label>
+            <input type="text" id="groups" placeholder="e.g. Finance, IT, Operations" required />
+            <span class="error-text" id="groupsError"></span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-cancel" id="cancelFormBtn">Cancel</button>
+          <button type="submit" class="btn btn-save">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== CONFIRMATION POPUP (SAVE) ===== -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal modal-confirm">
+      <h3>Are you sure you want to save?</h3>
+      <div class="confirm-actions">
+        <button class="btn btn-cancel" id="confirmNo">No</button>
+        <button class="btn btn-save" id="confirmYes">Yes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CONFIRMATION POPUP (DELETE) ===== -->
+  <div class="modal-overlay" id="deleteConfirmModal">
+    <div class="modal modal-confirm modal-delete">
+      <div class="delete-icon">&#128465;</div>
+      <h3>Are you sure you want to delete?</h3>
+      <p class="delete-warning">This action cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="btn btn-cancel" id="deleteNo">No</button>
+        <button class="btn btn-delete" id="deleteYes">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- keep your existing wiring -->
+  <script src="js/env.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/ux-metrics.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

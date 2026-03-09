@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Risk Dashboard</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+ 
+<body>
+<div class="app-shell">
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+<div class="brand">
+<div class="brand-mark">◈</div>
+<div class="brand-name">Code Warriors</div>
+</div>
+ 
+      <nav class="nav" aria-label="Primary">
+<a class="nav-item active" href="#">
+<span class="nav-ico">▦</span><span>Dashboard</span>
+</a>
+</nav>
+ 
+      <div class="sidebar-footer">
+<div class="user-chip">
+<div class="avatar"></div>
+<div class="user-meta">
+<div class="user-name">User</div>
+<div class="user-sub">Session</div>
+</div>
+</div>
+</div>
+</aside>
+ 
+    <!-- ===== MAIN ===== -->
+<main class="main">
+<!-- Top bar -->
+<header class="topbar">
+<div class="topbar-left">
+<h1 class="page-title">Risk Dashboard</h1>
+</div>
+ 
+        <div class="topbar-right">
+          <!-- Actions dropdown (kept for JS) -->
+<div class="actions-wrapper">
+<button class="actions-btn" id="actionsBtn" type="button">
+              Actions <span class="arrow">▾</span>
+</button>
+<div class="dropdown-menu" id="dropdownMenu">
+<button class="dropdown-item" id="newRiskBtn" type="button">New Risk</button>
+</div>
+</div>
+ 
+        </div>
+</header>
+ 
+      <!-- Content -->
+<section class="content">
+<!-- =========================================================
+             ROW 1 (FULL WIDTH FEEL): RISKS TABLE
+             Moved OUT of the grid so it reads as the primary card,
+             similar to your wireframe.
+        ========================================================== -->
+<section class="card table-card" aria-labelledby="risksCardTitle">
+<div class="card-head">
+<h2 class="card-title" id="risksCardTitle">Risks</h2>
+<span class="subtle" id="tableHint">Latest entries</span>
+</div>
+ 
+          <div class="table-wrapper">
+<table id="riskTable">
+<thead>
+<tr>
+<th>Risk ID</th>
+<th>Risk Description</th>
+<th>Severity Level</th>
+<th>Groups</th>
+<th>Created At</th>
+<th>Delete</th>
+</tr>
+</thead>
+<tbody id="riskTableBody"></tbody>
+</table>
+ 
+            <p class="empty-msg" id="emptyMsg">
+              No risks created yet. Click <strong>Actions → New Risk</strong> to add one.
+</p>
+</div>
+</section>
+ 
+        <!-- =========================================================
+             ROW 2+: ANALYTICS GRID
+             Order is now: Confusion (left) + Graphs (right, wider)
+             which matches your reference image.
+        ========================================================== -->
+<div class="grid">
+<!-- HERO: Confusion score card -->
+<section class="card confusion-hero" id="confusionHero" aria-labelledby="confusionTitle">
+  <!-- Animated glow border layer -->
+  <div class="hero-glow"></div>
+
+  <div class="confusion-hero-head">
+    <div>
+      <h2 class="confusion-hero-title" id="confusionTitle">Confusion Score</h2>
+      <p class="confusion-hero-sub">AI-predicted user confusion from UX behaviour metrics</p>
+    </div>
+    <span class="status-badge" id="statusBadge">Awaiting</span>
+  </div>
+
+  <div class="confusion-hero-body">
+    <!-- Big ring (centre stage) -->
+    <div class="confusion-ring-wrapper" id="confusionRingArea">
+      <svg class="confusion-ring" viewBox="0 0 180 180" aria-label="Confusion score ring">
+        <defs>
+          <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="var(--cyan)"/>
+            <stop offset="100%" stop-color="var(--pink)"/>
+          </linearGradient>
+        </defs>
+        <circle class="ring-bg" cx="90" cy="90" r="78"></circle>
+        <circle
+          class="ring-progress"
+          id="ringProgress"
+          cx="90" cy="90" r="78"
+          stroke-dasharray="490.09"
+          stroke-dashoffset="490.09"
+        ></circle>
+      </svg>
+      <div class="confusion-percent" id="confusionPercent">0%</div>
+    </div>
+
+    <!-- Right column: CTA + result details -->
+    <div class="confusion-hero-details">
+      <button class="btn-glow-hero" id="bottomActionsBtn" type="button">
+        <span class="btn-glow-icon">⚡</span> Calculate Score
+      </button>
+
+      <div class="confusion-result" id="confusionResult">
+        <div class="confusion-label" id="confusionLabel">Based on last risk's UX metrics</div>
+
+        <div class="confusion-metrics" id="confusionMetrics">
+          <!-- Metric pills injected by app.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+          <!-- PARAMETER IMPACT CARD (full-width) -->
+          <section class="card card-full" id="impactCard" aria-labelledby="impactTitle" style="display:none;">
+            <div class="card-head">
+              <h2 class="card-title" id="impactTitle">Parameter Impact on Confusion</h2>
+              <span class="subtle">Weighted contribution from friction index</span>
+            </div>
+
+            <div class="impact-body">
+              <!-- LEFT: Horizontal bar chart -->
+              <div class="impact-bars" id="impactBars">
+                <!-- Bars injected by app.js -->
+              </div>
+
+              <!-- RIGHT: Radar chart -->
+              <div class="impact-radar-wrap">
+                <svg id="radarChart" class="radar-svg" viewBox="0 0 300 300" aria-label="Radar chart of UX parameters"></svg>
+              </div>
+            </div>
+          </section>
+
+          <!-- OPTIONAL EXTRA CARDS removed (Severity mix, Activity) -->
+</div>
+</section>
+</main>
+</div>
+ 
+  <!-- ===== NEW RISK FORM MODAL ===== -->
+<div class="modal-overlay" id="riskFormModal">
+<div class="modal">
+<div class="modal-header">
+<h2>Create New Risk</h2>
+<button class="modal-close" id="closeFormModal" aria-label="Close modal">&times;</button>
+</div>
+ 
+      <form id="riskForm" novalidate>
+<div class="form-section">
+<h3>Risk Details</h3>
+ 
+          <div class="form-group">
+<label for="riskId">Risk ID:</label>
+<input type="text" id="riskId" placeholder="e.g. RISK-001" required />
+<span class="error-text" id="riskIdError"></span>
+</div>
+ 
+          <div class="form-group">
+<label for="riskDesc">Risk Description:</label>
+<textarea id="riskDesc" rows="3" placeholder="Describe the risk..." required></textarea>
+<span class="error-text" id="riskDescError"></span>
+</div>
+ 
+          <div class="form-group">
+<label for="severityLevel">Severity Level:</label>
+<select id="severityLevel" required>
+<option value="">-- Select --</option>
+<option value="Low">Low</option>
+<option value="Medium">Medium</option>
+<option value="High">High</option>
+<option value="Critical">Critical</option>
+</select>
+<span class="error-text" id="severityError"></span>
+</div>
+</div>
+ 
+        <div class="form-section">
+<h3>Objects</h3>
+ 
+          <div class="form-group">
+<label for="groups">Groups:</label>
+<input type="text" id="groups" placeholder="e.g. Finance, IT, Operations" required />
+<span class="error-text" id="groupsError"></span>
+</div>
+</div>
+ 
+        <div class="form-actions">
+<button type="button" class="btn btn-cancel" id="cancelFormBtn">Cancel</button>
+<button type="submit" class="btn btn-save">Save</button>
+</div>
+</form>
+</div>
+</div>
+ 
+  <!-- ===== CONFIRMATION POPUP (SAVE) ===== -->
+<div class="modal-overlay" id="confirmModal">
+<div class="modal modal-confirm">
+<h3>Are you sure you want to save?</h3>
+<div class="confirm-actions">
+<button class="btn btn-cancel" id="confirmNo">No</button>
+<button class="btn btn-save" id="confirmYes">Yes</button>
+</div>
+</div>
+</div>
+ 
+  <!-- ===== CONFIRMATION POPUP (DELETE) ===== -->
+<div class="modal-overlay" id="deleteConfirmModal">
+<div class="modal modal-confirm modal-delete">
+<div class="delete-icon">&#128465;</div>
+<h3>Are you sure you want to delete?</h3>
+<p class="delete-warning">This action cannot be undone.</p>
+<div class="confirm-actions">
+<button class="btn btn-cancel" id="deleteNo">No</button>
+<button class="btn btn-delete" id="deleteYes">Yes, Delete</button>
+</div>
+</div>
+</div>
+ 
+  <!-- ===== SCRIPTS ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+ 
+  <!-- keep your existing wiring -->
+<script src="js/env.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/ux-metrics.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

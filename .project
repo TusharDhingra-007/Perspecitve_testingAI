@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Arpan_Project</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Model/predict_satisfaction.py</name>
+			<type>1</type>
+			<location>C:/Users/Arpan Kumar/Downloads/predict_satisfaction.py</location>
+		</link>
+		<link>
+			<name>Model/xgb_satisfaction_model.pkl</name>
+			<type>1</type>
+			<location>C:/Users/Arpan Kumar/Downloads/xgb_satisfaction_model.pkl</location>
+		</link>
+	</linkedResources>
+</projectDescription>

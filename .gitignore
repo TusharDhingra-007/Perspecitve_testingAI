@@ -1,0 +1,18 @@
+# Eclipse project files
+.project
+.settings/
+.classpath
+
+# Java compiled files
+*.class
+
+# Server file (local dev only)
+Server.java
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Environment secrets (DO NOT COMMIT)
+.env
+js/env.js
