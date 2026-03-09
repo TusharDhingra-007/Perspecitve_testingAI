@@ -139,17 +139,41 @@ Actual Idea – Plug-In Model Architecture
 
 ## 🛠️ Tech Stack
 
-Python
+* Python
 
-Flask
+* Flask
 
-XGBoost
+* XGBoost
 
-Pandas / NumPy
+* Pandas / NumPy
 
-Frontend (HTML/CSS/JS)
+* Frontend (HTML/CSS/JS)
 
-Firebase (optional integration)
+* Firebase (optional integration)
+
+## 🖥️ Steps to Run the Project Locally
+
+* Clone the repository
+
+* Install Python 3.9+ and pip
+
+* Create and activate a virtual environment
+
+* Install required Python packages (flask, flask-cors, numpy, pandas, scikit-learn, xgboost)
+
+* Place xgb_satisfaction_model.pkl in the same folder as app.py
+
+* Run the backend using python app.py
+
+* Create a Firebase project and enable Firestore
+
+* Copy Firebase web configuration keys
+
+* Create js/env.js from env.example.js and add Firebase config with apiBaseUrl = http://localhost:5000
+
+* Run the frontend using Live Server or python -m http.server 8000
+
+* Open the browser and test the application locally
 
 ## 👥 Team
 
