@@ -175,6 +175,12 @@ Build a plug-in framework for SDLC integration
 
 * Open the browser and test the application locally
 
+## 👨‍💻 Working Demo
+
+<img width="1888" height="815" alt="image" src="https://github.com/user-attachments/assets/130a188b-debb-4e4c-9aae-f72c98e2300b" />
+
+<img width="1889" height="824" alt="image" src="https://github.com/user-attachments/assets/bd1b68b4-f4ab-493c-a6f8-1d65ff9867c9" />
+
 ## 👥 Team
 
 Team Name: Code Warriors
